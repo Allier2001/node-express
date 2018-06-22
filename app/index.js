@@ -29,6 +29,16 @@ router.get('/user', (req, res) => {
   })
 })
 
+router.get('/user/:id', (req, res) => {
+  const { id } = req.params
+  const users = User.findById({ _id: id }, (err, user) => {
+    if (err) res.json({ message: err })
+    res.json({
+      user
+    })
+  })
+})
+
 router.post('/user', (req, res) => {
   const errors = []
   const { username, email } = req.body
@@ -48,6 +58,16 @@ router.post('/user', (req, res) => {
     if (err) res.json({ message: err })
     res.json(201, {
       user
+    })
+  })
+})
+
+router.delete('/user/:id', (req, res) => {
+  const { id } = req.params
+  const users = User.findByIdAndRemove({ _id: id }, (err) => {
+    if (err) res.json({ message: err })
+    res.json({
+      message: `User with id ${id} has been removed.`
     })
   })
 })
