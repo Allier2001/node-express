@@ -1,6 +1,8 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const User = require('./schema/user')
+const multer = require('multer')
+const upload = multer({ dest: 'uploads/'})
 
 // Initialize app
 const app = express()
@@ -59,6 +61,13 @@ router.post('/user', (req, res) => {
     res.json(201, {
       user
     })
+  })
+})
+
+router.post('/upload', upload.array('files', 3), (req, res, next) => {
+  console.log(req)
+  res.json({
+    message: 'Upload'
   })
 })
 
